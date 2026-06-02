@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asian Paints Digital Fandeck</title>
+  <link rel="icon" href="https://www.asianpaints.com/etc.clientlibs/apcolourcatalogue/clientlibs/clientlib-global/resources/images/Favicon.webp" type="image/x-icon">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" /> -->
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.3.0/fonts/remixicon.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style1.css" />
+</head>
+
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+  <div class="ambient ambient-three"></div>
+
+  <!-- Header: brand, live search, and shortlist review CTA. -->
+  <header class="topbar" aria-label="Main navigation">
+    <a class="brand" href="#" aria-label="Asian Paints Home">
+      <span class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </span>
+      <span class="brand-copy">
+        <!-- <strong>asian<span>paints</span></strong> -->
+         <picture>
+              <img loading="eager" fetchpriority="high" height="32" width="50" alt="Asian Paints Home Page" title="Asian Paints Home Page" style="height: 100%;" src="https://static.asianpaints.com/etc.clientlibs/apcolourcatalogue/clientlibs/clientlib-global-unification/resources/images/header/asian-paints-logo.webp">
+            </picture>
+        <small>Digital Fandeck</small>
+      </span>
+    </a>
+
+    <!-- <div class="title-block">
+      <strong>Asian Paints</strong>
+      <span>Digital Fandeck</span>
+    </div> -->
+
+    <div class="search-wrap" role="search">
+      <i class="ri-search-line" aria-hidden="true"></i>
+      <input id="shadeSearch" type="search" placeholder="Search shade name or code" autocomplete="off"
+        aria-label="Search shade name or code" />
+      <button id="clearSearch" class="icon-btn ghost hidden" type="button" aria-label="Clear search">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+      <div id="suggestions" class="suggestions" aria-live="polite"></div>
+    </div>
+
+    <button id="openDetails" class="approve-btn" type="button" aria-label="Open shortlisted colour selection">
+      <i class="ri-check-line" aria-hidden="true"></i>
+      <span id="selectionBadge" class="selection-badge hidden">0</span>
+    </button>
+  </header>
+
+  <main class="app-shell">
+    <section class="hero-copy" aria-label="Intro">
+      <span class="eyebrow"><i class="ri-sparkling-2-line" aria-hidden="true"></i> Interactive
+        colour explorer</span>
+      <h1>Explore Asian Paints shades like a real fandeck.</h1>
+      <p>
+        Use drag, arrows, colour-family chips, or search. Pick a shade to
+        preview, shortlist colours, copy values, and build a clean selection.
+      </p>
+    </section>
+
+    <section class="control-row" aria-label="Shade filters and actions">
+      <div class="category-card">
+        <div class="range-label">Family</div>
+        <div id="categoryTabs" class="tabs" role="tablist" aria-label="Shade families">
+          <button class="tab active shimmer" type="button">Loading...</button>
+        </div>
+      </div>
+
+      <div class="mini-actions">
+        <button id="randomShade" class="pill-action" type="button">
+          <i class="ri-shuffle-line" aria-hidden="true"></i> Surprise me
+        </button>
+        <button id="toggleFavorites" class="pill-action" type="button" aria-label="Show shortlisted shades">
+          <i class="ri-bookmark-3-line" aria-hidden="true"></i> Shortlisted
+        </button>
+      </div>
+    </section>
+
+    <!-- Main fandeck: vertical range, fan cards, and selected shade room preview. -->
+    <section class="deck-section" aria-label="Digital fandeck canvas">
+      <aside class="mob-visible vertical-control vertical-control-upd" aria-label="Vertical shade range control">
+        <span id="rangeCount">1794 / 2200</span>
+        <input id="rangeSlider" type="range" min="0" max="2199" value="0" orient="vertical" aria-label="Shade range">
+      </aside>
+
+      <aside class="vertical-control-color hidden-sm" aria-label="Vertical shade range control">
+        <section class="palette-tray" aria-label="Saved palette">
+          <div>
+            <strong>Colour selection</strong>
+            <span id="paletteHint">Use the + symbol on fan strips, Save shade, or smart palette tiles
+              to shortlist colours.</span>
+          </div>
+          <div id="favoriteTray" class="favorite-tray"></div>
+        </section>
+      </aside>
+
+
+      <div id="fanStage" class="fan-stage" tabindex="0" aria-label="Fan deck. Drag or use arrow keys to browse shades.">
+        <div class="deck-shadow"></div>
+        <div id="fanDeck" class="fan-deck" aria-live="polite"></div>
+        <button id="selectedBeacon" class="selected-beacon" type="button" aria-label="Open selected shade">
+          <span class="beacon-swatch"></span>
+          <span class="beacon-copy">
+            <strong>Loading shades</strong>
+            <small>Please wait</small>
+          </span>
+          <i class="ri-arrow-right-up-line" aria-hidden="true"></i>
+        </button>
+
+
+
+        <!-- <div class="card range-speadometer-model hidden-sm">
+  
+  <div class="speed-arc">
+    <svg viewBox="0 0 467 269" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20,240 A230,230 0 0,1 480,240"
+            fill="none" stroke="#EEEDFE" stroke-width="18" stroke-linecap="round"/>
+      <path id="arc-fill" d="M20,240 A230,230 0 0,1 480,240"
+            fill="none" stroke="#075da7" stroke-width="18" stroke-linecap="round"
+            stroke-dasharray="345" stroke-dashoffset="172"/>
+      <circle id="arc-thumb" cx="130" cy="44" r="18" fill="#534AB7"
+              style="filter:drop-shadow(0 0 6px rgba(83,74,183,.6))"/>
+    </svg>
+    <input type="range" id="rangeSlider" min="0" max="100" value="50" step="1" aria-label="Speed">
+    <span id="rangeCount" class="card-label" >1794 / 2200</span>
+  
+  </div>
+</div> -->
+        <div class="card range-speadometer-model hidden-sm">
+          <input type="range" id="rangeSlider" min="0" max="100" value="50" step="1" aria-label="Speed"
+            style="position:absolute;width:1px;height:1px;opacity:0;pointer-events:none;">
+          <!-- Arc SVG -->
+          <div class="arc-wrap" id="arcWrap">
+            <svg id="arcSvg" viewBox="0 0 300 155">
+              <defs>
+                <linearGradient id="arcGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#E24B4A" />
+                  <stop offset="25%" stop-color="#EF9F27" />
+                  <stop offset="60%" stop-color="#1D9E75" />
+                  <stop offset="100%" stop-color="#5B4CF5" />
+                </linearGradient>
+              </defs>
+
+              <!-- background track -->
+              <path id="bgArc" fill="none" stroke-width="10" stroke-linecap="round" stroke="#e0ddd6" />
+
+              <!-- filled progress -->
+              <path id="fillArc" fill="none" stroke-width="10" stroke-linecap="round" stroke="url(#arcGrad)"
+                stroke-dasharray="1000" stroke-dashoffset="1000" style="transition: stroke-dashoffset .05s ease" />
+
+              <!-- thumb outer ring -->
+              <circle id="thumb" r="14" fill="var(--bg)" stroke="#5B4CF5" stroke-width="3" cx="150" cy="150" style="cursor: grab; transition: stroke .25s, filter .2s;
+               filter: drop-shadow(0 2px 6px rgba(91,76,245,.25))" />
+
+              <!-- thumb inner dot -->
+              <circle id="dot" r="5" fill="#5B4CF5" cx="150" cy="150"
+                style="pointer-events: none; transition: fill .25s" />
+            </svg>
+
+            <!-- live number -->
+            <div class="center-val">
+              <span class="cv-big" id="cvNum">0</span> / <span style="font-size:20px;">2200</span>
+            </div>
+          </div>2200
+
+
+
+        </div>
+
+      </div>
+      <aside class="insight-card" aria-label="Selected colour summary">
+        <div class="insight-head">
+          <span id="activeFamily">Family</span>
+          <button id="favoriteCurrent" class="icon-btn" type="button" aria-label="Favorite selected shade">
+            <i class="ri-heart-3-line" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div id="previewWall" class="preview-wall">
+          <div class="preview-art"></div>
+          <div class="preview-sofa"></div>
+          <div class="preview-floor"></div>
+        </div>
+        <h2 id="activeName">Loading...</h2>
+        <p id="activeCode">Fetching shade data</p>
+        <div class="value-grid">
+          <div><span>HEX</span><strong id="activeHex">--</strong></div>
+          <div><span>RGB</span><strong id="activeRgb">--</strong></div>
+        </div>
+      </aside>
+    </section>
+
+    <!-- <section class="bottom-console" aria-label="Browse controls">
+        <button
+          id="prevShade"
+          class="round-btn"
+          type="button"
+          aria-label="Previous shade"
+        >
+          <i class="ri-arrow-left-s-line" aria-hidden="true"></i>
+        </button>
+        <div class="progress-wrap">
+          <div class="progress-meta">
+            <span id="progressText">Loading shades...</span>
+            <span id="shadeTotal">0 shades</span>
+          </div>
+          <button
+            id="progressTrack"
+            class="progress-track"
+            type="button"
+            aria-label="Jump through shade range"
+          >
+            <span id="progressFill"></span>
+            <span id="progressKnob"></span>
+          </button>
+        </div>
+        <button
+          id="nextShade"
+          class="round-btn"
+          type="button"
+          aria-label="Next shade"
+        >
+          <i class="ri-arrow-right-s-line" aria-hidden="true"></i>
+        </button>
+        <button
+          id="resetDeck"
+          class="round-btn rotate"
+          type="button"
+          aria-label="Reset fan deck"
+        >
+          <i class="ri-reset-right-line" aria-hidden="true"></i>
+        </button>
+      </section> -->
+
+
+
+    <section class="palette-tray mob-visible" aria-label="Saved palette">
+      <div>
+        <strong>Colour selection</strong>
+        <span id="paletteHint">Use the + symbol on fan strips, Save shade, or smart palette tiles
+          to shortlist colours.</span>
+      </div>
+      <div id="favoriteTray" class="favorite-tray"></div>
+    </section>
+
+    <p class="colour-note">
+      *Digital colours are indicative only. Always verify with a physical
+      shade card before final paint selection.
+    </p>
+  </main>
+
+  <!-- Shade details modal: opened from a fan card/strip. It intentionally does not show shortlisted colours. -->
+  <div id="modalOverlay" class="modal-overlay" aria-hidden="true">
+    <article class="shade-modal" role="dialog" aria-modal="true" aria-labelledby="modalShadeName">
+      <button id="closeModal" class="modal-close" type="button" aria-label="Close details">
+        <i class="ri-close-line" aria-hidden="true"></i>
+      </button>
+      <div class="modal-swatch" id="modalSwatch">
+        <div class="modal-pattern"></div>
+      </div>
+      <div class="modal-content">
+        <div class="modal-kicker" id="modalFamily">Colour family</div>
+        <h2 id="modalShadeName">Shade name</h2>
+        <p id="modalShadeCode">Code</p>
+
+        <div class="modal-values">
+          <button class="copy-chip" type="button" data-copy="hex">
+            <span>HEX</span><strong id="modalHex">--</strong><i class="ri-file-copy-line" aria-hidden="true"></i>
+          </button>
+          <button class="copy-chip" type="button" data-copy="rgb">
+            <span>RGB</span><strong id="modalRgb">--</strong><i class="ri-file-copy-line" aria-hidden="true"></i>
+          </button>
+          <button class="copy-chip" type="button" data-copy="code">
+            <span>CODE</span><strong id="modalCode">--</strong><i class="ri-file-copy-line" aria-hidden="true"></i>
+          </button>
+        </div>
+
+        <div class="palette-preview">
+          <div class="palette-title">
+            <span>Smart palette</span>
+            <small>Tap a tile to view it</small>
+          </div>
+          <div id="smartPalette" class="smart-palette"></div>
+        </div>
+
+        <div class="modal-actions">
+          <button id="modalFavorite" class="primary-action" type="button">
+            <i class="ri-heart-3-line" aria-hidden="true"></i> Save shade
+          </button>
+          <button id="modalNext" class="secondary-action" type="button">
+            <i class="ri-arrow-right-line" aria-hidden="true"></i> Next shade
+          </button>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <!-- Colour selection modal: opened only from the blue header CTA. -->
+  <div id="selectionOverlay" class="selection-overlay" aria-hidden="true">
+    <article class="selection-modal" role="dialog" aria-modal="true" aria-labelledby="selectionModalTitle">
+      <header class="selection-modal-head">
+        <button id="closeSelectionModal" class="selection-back" type="button" aria-label="Close colour selection">
+          <i class="ri-arrow-left-line" aria-hidden="true"></i>
+        </button>
+        <div class="selection-heading">
+          <span>Shortlisted colours</span>
+          <h2 id="selectionModalTitle">
+            Colour Selection: <strong id="selectionCount">0 colours</strong>
+          </h2>
+          <p>
+            Review the shades and palette tiles saved with the plus button,
+            smart palette, or Save shade CTA.
+          </p>
+        </div>
+        <button id="clearSelection" class="clear-selection selection-clear-all" type="button">
+          Clear all
+        </button>
+      </header>
+      <div id="selectionBento" class="selection-bento selection-bento-modal"></div>
+    </article>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tinycolor/1.6.0/tinycolor.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>

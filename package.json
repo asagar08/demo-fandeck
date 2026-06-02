@@ -1,0 +1,14 @@
+{
+  "name": "asian-paints-static-fandeck",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static Asian Paints digital fandeck using local apcatalogue.json data.",
+  "scripts": {
+    "build:css": "sass style.scss style.css --style=compressed --no-source-map",
+    "watch:css": "sass --watch style.scss style.css --style=expanded",
+    "check:js": "node --check script.js"
+  },
+  "devDependencies": {
+    "sass": "latest"
+  }
+}
