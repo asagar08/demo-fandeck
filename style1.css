@@ -1235,7 +1235,7 @@ background: linear-gradient(135deg, #ff6a00, #ee0979);
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 
 .primary-action,
